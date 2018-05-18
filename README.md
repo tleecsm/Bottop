@@ -1,7 +1,8 @@
 # BtR (Bottop Reloaded)
 ## The Most Personality You'll Ever Find in a Discord Bot
 ## Created by Tanner Lee
-  
+## Current Version: 0.0
+
 ### Bottop
 Bottop is a pet project I've had for several years.   
 Bottop is a user interactable Discord bot that provides all manner of memes to any Discord server.
@@ -26,5 +27,23 @@ BtR will be built upon a solid foundation of Software Engineering concepts:
     
     
     
-### Functionality
-Listed below are some basic functionalities included within BtR
+### Current Functionality
+Listed below are some basic functionalities currently included within BtR  
+  
+### Desired Functionality
+Listed below are some of the future functionalities I'd like to implement within BtR
+* Basic chat interactions
+  * User ask and reply commands
+  * Chat modification commands
+* Image-fetch commands
+* Audio support
+  * Support for voice channel connections
+  * Audio file repository
+  * Audio streaming via URL (YouTube)
+* Bot profile support
+  * "Now Playing" interactable
+  * Profile picture interactable
+  * Nickname interactable
+* Permissions
+  * Commands accessible only by specific roles
+* Settings file to modify permission and command parameters
