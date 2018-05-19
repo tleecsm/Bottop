@@ -4,6 +4,10 @@ Created on Fri May 18 19:20:36 2018
 
 @author: Tanner Lee
 https://github.com/tleecsm
+
+initializeBtR.py
+Small script used to parse the preferences file
+Stores preference data in a class called initializeData
 """
 
 import configparser

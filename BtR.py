@@ -4,6 +4,11 @@ Created on Fri May 18 17:18:51 2018
 
 @author: Tanner Lee
 https://github.com/tleecsm
+
+BtR.py
+Entry point for the program
+Creates the discord client
+Handles the recieving discord event signals
 """
 
 import discord
