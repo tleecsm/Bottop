@@ -1,3 +1,4 @@
 [configBtR]
 botToken = PASTEYOURBOTTOKENHERE
 commandCharacter = !
+enabledCommands = hello,howdy,whats up

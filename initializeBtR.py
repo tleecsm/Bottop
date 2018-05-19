@@ -26,3 +26,7 @@ class initializeData:
         self.botToken = self.parser.get('configBtR', 'botToken')
         self.commandCharacter = self.parser.get('configBtR', 
                                                 'commandCharacter')
+        #enabledCommands parses in as a comma delimited string
+        #split the string and place it in a list to make it more usable
+        self.enabledCommands = self.parser.get('configBtR', 'enabledCommands')
+        self.enabledCommands = self.enabledCommands.split(',')

@@ -9,14 +9,21 @@ https://github.com/tleecsm
 import discord
 from initializeBtR import initializeData
 
+#Display launching message
+print('!Launching BtR!')
+
 #Create an instance of initialization data 
 #Then call initialize() to generate data based on the preferences file
 initData = initializeData()
 initData.initialize()
 
+#Create an instance of command data
+#Then call initialize() to generatedata based on the current commands 
+
 #Extract the data given by the initialization
 botToken = initData.botToken
-commandCharacter = initData.commandCharacter 
+commandCharacter = initData.commandCharacter
+enabledCommands = initData.enabledCommands
 
 #Create the client that will serve as the program's core
 client = discord.Client()
@@ -39,15 +46,17 @@ async def on_message(message):
     if message.author == client.user:
         #If it was, return
         return
-
-    if message.content.startswith('`hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
-        
-    if message.content.startswith('`kill'):
-        msg = 'Goodbye!'.format(message)
-        await client.send_message(message.channel, msg)
+    
+    #Kill is checked by default
+    if message.content.startswith(commandCharacter+'kill'):
+        await client.send_message(message.channel, 'Goodbye Forever...')
         exit(0)
+    
+    for command in enabledCommands:
+        if message.content.startswith(commandCharacter+command):
+            reply = 'Hey there {0.author.mention}!'.format(message)
+            await client.send_message(message.channel, reply)
+
 
 @client.event
 async def on_ready():
