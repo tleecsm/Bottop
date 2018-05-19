@@ -9,8 +9,9 @@ https://github.com/tleecsm
 import discord
 from initializeBtR import initializeData
 
-#Display launching message
+#Display launching message and initialize version number
 print('!Launching BtR!')
+versionBtR = '0.1'
 
 #Create an instance of initialization data 
 #Then call initialize() to generate data based on the preferences file
@@ -47,22 +48,32 @@ async def on_message(message):
         #If it was, return
         return
     
-    #Kill is checked by default
+    #Kill is checked by default (cannot be disabled)
     if message.content.startswith(commandCharacter+'kill'):
         await client.send_message(message.channel, 'Goodbye Forever...')
         exit(0)
     
+    #Parse through the list of all enabled commands
     for command in enabledCommands:
+        #If the message matches one of our commands, we will handle it
         if message.content.startswith(commandCharacter+command):
+            #TODO: handleCommand()
             reply = 'Hey there {0.author.mention}!'.format(message)
             await client.send_message(message.channel, reply)
 
 
 @client.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
+    """
+    on_ready
+    asynchronous function
+    Acts as a listener for the "on_ready" event
+    The function executes when a message is sent to a channel the bot can see
+    """
+    print('Launching Complete')
+    print('BtR Version: ' + versionBtR)
+    print('Discord Username: ' + client.user.name)
+    print('Application ID: ' + client.user.id)
     print('------')
 
 #client.run must be the last line of the main script
