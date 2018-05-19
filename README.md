@@ -1,7 +1,7 @@
 # BtR (Bottop Reloaded)
 ## The Most Personality You'll Ever Find in a Discord Bot
 ## Created by Tanner Lee
-## Current Version: 0.1
+## Current Version: 0.2
 
 ### Bottop
 Bottop is a pet project I've had for several years.   
@@ -32,6 +32,9 @@ Listed below are some basic functionalities currently included within BtR
 * Ability to join a server and appear online
 * Ability to recognize when a user sends a message
 * Ability to react when a BtR command is given in the chat
+* Commands: 
+  * hello
+  * bee  
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
@@ -39,6 +42,8 @@ Listed below are some of the future functionalities I'd like to implement within
   * User ask and reply commands
   * Chat modification commands
 * Image-fetch commands
+* MyAnimeList interactions
+  * Gives opinions based on MAL ratings
 * Audio support
   * Support for voice channel connections
   * Audio file repository

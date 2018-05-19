@@ -6,7 +6,7 @@ Created on Sat May 19 14:23:51 2018
 https://github.com/tleecsm
 
 hello.py
-Script that contains the logic to handle the "hello.py" command
+Script that contains the logic to handle the "hello" command
 Command mostly used for proof of concept and bot testing
 """
 

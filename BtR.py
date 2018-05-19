@@ -17,7 +17,7 @@ from commands.handleCommand import handleCommand
 
 #Display launching message and initialize version number
 print('!Launching BtR!')
-versionBtR = '0.1'
+versionBtR = '0.2'
 
 #Create an instance of initialization data 
 #Then call initialize() to generate data based on the preferences file

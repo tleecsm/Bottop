@@ -12,6 +12,7 @@ Calls other command handling scripts
 """
 
 from commands.hello import hello
+from commands.bee import bee
 
 async def handleCommand(client, message):
     """
@@ -27,7 +28,9 @@ async def handleCommand(client, message):
     commandName = commandName.lower()
     
     #Pass the command to the correct handling function
-    if commandName == 'hello':
+    if commandName.startswith('hello'):
         await hello(client, message)
-    elif commandName == 'howdy':
+    elif commandName.startswith('howdy'):
         await hello(client, message)
+    elif commandName.startswith('bee'):
+        await bee(client, message)
