@@ -10,3 +10,24 @@ Small script used when a command signal has been recieved from the bot
 Runs logic to determine which command was sent
 Calls other command handling scripts
 """
+
+from commands.hello import hello
+
+async def handleCommand(client, message):
+    """
+    handleCommand
+    Function called when a command is identified by the bot
+    Determines which command was called
+    Passes client and message to the appropriate function
+    @param client The discord client the bot is linked to
+    @param message The message containing the command
+    """
+    #Start by stripping the command character off
+    commandName = message.content[1:]
+    commandName = commandName.lower()
+    
+    #Pass the command to the correct handling function
+    if commandName == 'hello':
+        await hello(client, message)
+    elif commandName == 'howdy':
+        await hello(client, message)

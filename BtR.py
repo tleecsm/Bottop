@@ -13,6 +13,7 @@ Handles the recieving discord event signals
 
 import discord
 from initializeBtR import initializeData
+from commands.handleCommand import handleCommand
 
 #Display launching message and initialize version number
 print('!Launching BtR!')
@@ -60,11 +61,11 @@ async def on_message(message):
     
     #Parse through the list of all enabled commands
     for command in enabledCommands:
+        #We want to ignore case when comparing the message content
+        messageContent = message.content.lower()
         #If the message matches one of our commands, we will handle it
-        if message.content.startswith(commandCharacter+command):
-            #TODO: handleCommand()
-            reply = 'Hey there {0.author.mention}!'.format(message)
-            await client.send_message(message.channel, reply)
+        if messageContent.startswith(commandCharacter+command):
+            await handleCommand(client, message)
 
 
 @client.event
