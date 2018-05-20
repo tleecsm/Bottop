@@ -13,6 +13,7 @@ Calls other command handling scripts
 
 from commands.hello import hello
 from commands.bee import bee
+from commands.avatar import avatar
 
 async def handleCommand(client, message):
     """
@@ -32,5 +33,7 @@ async def handleCommand(client, message):
         await hello(client, message)
     elif commandName.startswith('howdy'):
         await hello(client, message)
-    elif commandName.startswith('bee'):
+    elif commandName.startswith('bee '):
         await bee(client, message)
+    elif commandName.startswith('avatar'):
+        await avatar(client, message)

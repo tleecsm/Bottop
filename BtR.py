@@ -65,7 +65,7 @@ async def on_message(message):
         messageContent = message.content.lower()
         #If the message matches one of our commands, we will handle it
         #Requires whitespace after command name
-        if messageContent.startswith(commandCharacter+command+' '):
+        if messageContent.startswith(commandCharacter+command):
             await handleCommand(client, message)
 
 
