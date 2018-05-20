@@ -7,6 +7,9 @@ https://github.com/tleecsm
 
 bee.py
 Script that contains the logic to handle the "bee" command
+
+TODO:
+    Handle cases for multiple consecutive Ys
 """
 
 async def bee(client, message):
@@ -24,12 +27,12 @@ async def bee(client, message):
     #Create a blank string to fill with the reply
     reply = ''
     
-    #Create two booleans to identify if 'y' should be considered a vowel
-    lastLetterWasVowel = False
+    #Create a boolean to identify if 'y' should be considered a vowel
     lastLetterWasY = False
     #Initialize dummy variable that will be used to contain the Y's case
     lastLetterCase = 'Y'
     
+    stringPosition = 0
     for letter in messageContent:
 
         if letter.lower() in ('a', 'e', 'i', 'o', 'u'):
@@ -38,7 +41,7 @@ async def bee(client, message):
             letter = 'bee'
             #Check to see if previous letter was a Y
             if lastLetterWasY:
-                #The last y was not a vowel
+                #The last y is not a vowel
                 #Add Y + bee to the reply
                 reply = reply + lastLetterCase + letter
             else:
@@ -46,33 +49,32 @@ async def bee(client, message):
                 reply = reply + letter
             lastLetterWasY = False
         elif letter.lower() == 'y':
-            #If the current letter is a Y
-            #Check previous letter 
-            if lastLetterWasVowel or lastLetterWasY:
-                #Then Y is not a vowel
-                #Add the Y to the reply
+            if stringPosition == 1:   # == 1 because first character is a space
+                #Y starts the word
+                #Never a vowel at the start of the word
                 reply = reply + letter
             else:
-                #Y may be a vowel
-                #Do not add it to the reply yet
+                #Processing for determining if Y was a vowel
+                #Will happen in the next iteration
                 lastLetterWasY = True
                 lastLetterCase = letter
         else:
             #Current letter is not a vowel 
             #Check to see if previous letter was a Y
             if lastLetterWasY:
-                #Then Y is a vowel
+                #Then Y is not a vowel
                 #Add 'bee' + letter to the reply
                 reply = reply + 'bee' + letter
             else: 
                 #Add the letter to the reply
                 reply = reply + letter
             lastLetterWasY = False
+        stringPosition += 1
 
     #Ensure the last letter was not a Y
     if lastLetterWasY:
-        #Add a final y to the reply
-        reply = reply + lastLetterCase
+        #Add a final bee to the reply
+        reply = reply + 'bee'
         
                 
                 
