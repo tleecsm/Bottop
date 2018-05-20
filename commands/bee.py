@@ -22,7 +22,7 @@ async def bee(client, message):
     messageContent = message.content
     
     #Strip off the "bee" tag
-    messageContent = messageContent[4:]
+    messageContent = messageContent[5:]
     
     #Create a blank string to fill with the reply
     reply = ''
@@ -49,7 +49,7 @@ async def bee(client, message):
                 reply = reply + letter
             lastLetterWasY = False
         elif letter.lower() == 'y':
-            if stringPosition == 1:   # == 1 because first character is a space
+            if stringPosition == 0:   
                 #Y starts the word
                 #Never a vowel at the start of the word
                 reply = reply + letter
