@@ -64,7 +64,8 @@ async def on_message(message):
         #We want to ignore case when comparing the message content
         messageContent = message.content.lower()
         #If the message matches one of our commands, we will handle it
-        if messageContent.startswith(commandCharacter+command):
+        #Requires whitespace after command name
+        if messageContent.startswith(commandCharacter+command+' '):
             await handleCommand(client, message)
 
 
