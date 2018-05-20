@@ -32,9 +32,11 @@ Listed below are some basic functionalities currently included within BtR
 * Ability to join a server and appear online
 * Ability to recognize when a user sends a message
 * Ability to react when a BtR command is given in the chat
+* Ability to modify its profile via user commands
 * Commands: 
   * hello
   * bee  
+  * avatar
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
