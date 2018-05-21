@@ -5,7 +5,7 @@ Created on Sun May 20 15:45:10 2018
 @author: Tanner Lee
 https://github.com/tleecsm
 avatar.py
-Script that contains the logic to handle the "bee" command
+Script that contains the logic to handle the "avatar" command
 """
 
 async def avatar(client, message):
