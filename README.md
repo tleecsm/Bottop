@@ -55,7 +55,6 @@ Listed below are some of the future functionalities I'd like to implement within
   * Audio streaming via URL (YouTube)
 * Bot profile support
   * "Now Playing" interactable
-  * Profile picture interactable
   * Nickname interactable
 * Permissions
   * Commands accessible only by specific roles
