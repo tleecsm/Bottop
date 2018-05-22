@@ -10,7 +10,6 @@ Script that contains the logic to handle the "purge" command
 
 #TODO:
     Add override for number of messages that get deleted
-    Add ability to purge "last X amount of messages"
     Recursive call maybe?
 """
 

@@ -39,6 +39,7 @@ Listed below are some basic functionalities currently included within BtR
   * bee  
   * avatar
   * purge
+    * purgelast
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
