@@ -14,7 +14,7 @@ Calls other command handling scripts
 from commands.hello import hello
 from commands.bee import bee
 from commands.avatar import avatar
-from commands.purge import purge
+from commands.purge import purge, purgelast
 
 async def handleCommand(client, message):
     """
@@ -40,3 +40,5 @@ async def handleCommand(client, message):
         await avatar(client, message)
     elif commandName.startswith('purge '):
         await purge(client, message)
+    elif commandName.startswith('purgelast '):
+        await purgelast(client, message)
