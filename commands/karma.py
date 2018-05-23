@@ -34,7 +34,7 @@ async def karma(client, message):
     userId = userSpecified.id
     parser = configparser.RawConfigParser()
     #Try to pull the users data
-    parser.read('commands/karmaData')
+    parser.read('commands/karmaData', encoding='utf-8')
     try:    
         karmaValue = parser.get('userDataKarma', userId)
         karmaMessage = messageContent
@@ -51,7 +51,7 @@ async def karma(client, message):
 
 async def karmaself(client, message):
     """
-    karma
+    karmaself
     A version of karma that has no parameter
     By default this will search for the user who sent the message
     """
@@ -61,7 +61,7 @@ async def karmaself(client, message):
     userId = user.id
     parser = configparser.RawConfigParser()
     #Try to pull the users data
-    parser.read('commands/karmaData')
+    parser.read('commands/karmaData', encoding='utf-8')
     try:    
         karmaValue = parser.get('userDataKarma', userId)
         karmaMessage = user.name
@@ -75,3 +75,28 @@ async def karmaself(client, message):
         karmaMessage += ' doesn\'t have any karma yet!'
 
     await client.send_message(message.channel, karmaMessage)
+    
+async def karmaUpdate(client):
+    """
+    karmaUpdate
+    Not a command function
+    Used whenever a user has a message reacted to with a karma emoji
+    Increases or decreases karma by one for each react
+    """
+    
+    
+class initializeKarma:
+    
+    def initialize(self):
+        """
+        initialize
+        Function responsible for initializing the karma emojis
+        Stores parameters from the karma file to class variables
+        """
+        #Create a ConfigParser to do the dirty work
+        self.parser = configparser.RawConfigParser()
+        self.parser.read('commands/karmaData', encoding='utf-8')
+        self.goodKarma = self.parser.get('configKarma', 'goodKarmaReact')
+        self.badKarma = self.parser.get('configKarma', 'badKarmaReact')
+
+        

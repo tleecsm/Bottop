@@ -14,6 +14,7 @@ Handles the recieving discord event signals
 import discord
 from initializeBtR import initializeData
 from commands.handleCommand import handleCommand
+from commands.karma import initializeKarma
 
 #Display launching message and initialize version number
 print('!Launching BtR!')
@@ -23,6 +24,10 @@ versionBtR = '0.2'
 #Then call initialize() to generate data based on the preferences file
 initData = initializeData()
 initData.initialize()
+
+#Initialize Karma emojis
+initKarma = initializeKarma()
+initKarma.initialize()
 
 #Create an instance of command data
 #Then call initialize() to generatedata based on the current commands 
@@ -82,6 +87,42 @@ async def on_ready():
     print('Discord Username: ' + client.user.name)
     print('Application ID: ' + client.user.id)
     print('------')
+
+@client.event
+async def on_reaction_add(reaction, user):
+    """
+    on_reaction_remove
+    asynchronous function
+    Acts as a listener for the "on_reaction_remove" event
+    The function executes when a reaction is removed
+    This only triggers for messages that the bot has in its message cache
+    """
+    #Before doing anything
+    #Check to see if the reaction was a karma emoji
+    if reaction.emoji == initKarma.goodKarma:
+        consoleMessage = 'Writing to karmaData file :: Increasing '
+        consoleMessage += reaction.message.author.name
+        consoleMessage += '\'s karma by 1!'
+        print(consoleMessage)
+    if reaction.emoji == initKarma.badKarma:
+        consoleMessage = 'Writing to karmaData file :: Decreasing '
+        consoleMessage += reaction.message.author.name
+        consoleMessage += '\'s karma by 1!'
+        print(consoleMessage)
+
+@client.event
+async def on_reaction_remove(reaction, user):
+    """
+    on_reaction_remove
+    asynchronous function
+    Acts as a listener for the "on_reaction_remove" event
+    The function executes when a reaction is removed
+    This only triggers for messages that the bot has in its message cache
+    """
+    #Before doing anything
+    #Check to see if the reaction was a karma emoji
+
+
 
 #client.run must be the last line of the main script
 client.run(botToken)
