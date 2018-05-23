@@ -15,6 +15,7 @@ from commands.hello import hello
 from commands.bee import bee
 from commands.avatar import avatar
 from commands.purge import purge, purgelast
+from commands.karma import karma, karmaself
 
 async def handleCommand(client, message):
     """
@@ -42,3 +43,7 @@ async def handleCommand(client, message):
         await purge(client, message)
     elif commandName.startswith('purgelast '):
         await purgelast(client, message)
+    elif commandName.startswith('karma '):
+        await karma(client, message)
+    elif commandName == 'karma':
+        await karmaself(client, message)
