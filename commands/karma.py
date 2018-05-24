@@ -57,7 +57,6 @@ async def karmaself(client, message):
     """
     #Get the ID of the user who sent the message
     user = message.author
-    #Else the user was found and we can pull their ID
     userId = user.id
     parser = configparser.RawConfigParser()
     #Try to pull the users data
@@ -76,13 +75,47 @@ async def karmaself(client, message):
 
     await client.send_message(message.channel, karmaMessage)
     
-async def karmaUpdate(client):
+async def karmaUpdate(client, message, indicator):
     """
     karmaUpdate
     Not a command function
     Used whenever a user has a message reacted to with a karma emoji
     Increases or decreases karma by one for each react
     """
+    #Find the user id of the message author
+    user = message.author
+    userId = user.id
+    parser = configparser.RawConfigParser()
+    parser.read('commands/karmaData', encoding='utf-8')
+    #Decide whether karma should be increased or decreased
+    #Try to fetch the user's current karma
+    try:    
+        karmaValue = parser.get('userDataKarma', userId)
+        #convert to int
+        karmaValue = int(karmaValue)
+    except configparser.NoOptionError:
+        #If they have no karma data, default the value to 0
+        karmaValue = 0
+
+    #Parse whether the karma should be increased or decreased
+    if indicator == '+1':
+        #Increase their karma
+        karmaValue += 1        
+    elif indicator == '-1':
+        #Decrease their karma
+        karmaValue -= 1
+    else:
+        #Something terrible happened
+        print('ERROR: Could not update karmaData file!')
+        return
+    
+    #Update the data
+    parser.set('userDataKarma', str(userId), str(karmaValue))
+    with open('commands/karmaData', 'w', encoding='utf-8') as data:
+        parser.write(data)
+    consoleMessage = 'Writing to karmaData file :: COMPLETED'
+    print(consoleMessage)
+    
     
     
 class initializeKarma:

@@ -14,7 +14,7 @@ Handles the recieving discord event signals
 import discord
 from initializeBtR import initializeData
 from commands.handleCommand import handleCommand
-from commands.karma import initializeKarma
+from commands.karma import initializeKarma, karmaUpdate
 
 #Display launching message and initialize version number
 print('!Launching BtR!')
@@ -104,11 +104,13 @@ async def on_reaction_add(reaction, user):
         consoleMessage += reaction.message.author.name
         consoleMessage += '\'s karma by 1!'
         print(consoleMessage)
+        await karmaUpdate(client, reaction.message, '+1')
     if reaction.emoji == initKarma.badKarma:
         consoleMessage = 'Writing to karmaData file :: Decreasing '
         consoleMessage += reaction.message.author.name
         consoleMessage += '\'s karma by 1!'
         print(consoleMessage)
+        await karmaUpdate(client, reaction.message, '-1')
 
 @client.event
 async def on_reaction_remove(reaction, user):
@@ -121,6 +123,18 @@ async def on_reaction_remove(reaction, user):
     """
     #Before doing anything
     #Check to see if the reaction was a karma emoji
+    if reaction.emoji == initKarma.goodKarma:
+        consoleMessage = 'Writing to karmaData file :: Decreasing '
+        consoleMessage += reaction.message.author.name
+        consoleMessage += '\'s karma by 1!'
+        print(consoleMessage)
+        await karmaUpdate(client, reaction.message, '-1')
+    if reaction.emoji == initKarma.badKarma:
+        consoleMessage = 'Writing to karmaData file :: Increasing '
+        consoleMessage += reaction.message.author.name
+        consoleMessage += '\'s karma by 1!'
+        print(consoleMessage)
+        await karmaUpdate(client, reaction.message, '+1')
 
 
 
