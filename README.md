@@ -1,7 +1,7 @@
 # BtR (Bottop Reloaded)
 ## The Most Personality You'll Ever Find in a Discord Bot
 ## Created by Tanner Lee
-## Current Version: 0.2
+## Current Version: 0.3
 
 ### Bottop
 Bottop is a pet project I've had for several years.   
@@ -34,12 +34,14 @@ Listed below are some basic functionalities currently included within BtR
 * Ability to react when a BtR command is given in the chat
 * Ability to modify messages and message history in a channel
 * Ability to modify its profile via user commands
+* Stores karma data on each user (based on message reactions)
 * Commands: 
   * hello
   * bee  
   * avatar
   * purge
     * purgelast
+  * karma
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
