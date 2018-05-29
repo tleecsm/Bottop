@@ -16,6 +16,7 @@ from commands.bee import bee
 from commands.avatar import avatar
 from commands.purge import purge, purgelast
 from commands.karma import karma, karmaself
+from commands.imgur import imgurCommand
 
 async def handleCommand(client, message):
     """
@@ -30,6 +31,8 @@ async def handleCommand(client, message):
     commandName = message.content[1:]
     commandName = commandName.lower()
     
+    imgurHandle = imgurCommand()
+
     #Pass the command to the correct handling function
     if commandName.startswith('hello'):
         await hello(client, message)
@@ -47,3 +50,7 @@ async def handleCommand(client, message):
         await karma(client, message)
     elif commandName == 'karma':
         await karmaself(client, message)
+    elif commandName.startswith('imgur '):
+        await imgurHandle.imgur(client, message)
+    elif commandName == 'imgur':
+        await imgurHandle.imgurRandom(client, message)

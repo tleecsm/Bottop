@@ -7,6 +7,9 @@ https://github.com/tleecsm
 
 karma.py
 Script that contains the logic to handle the "karma" command
+
+TODO:
+    Multiple emojis for different karma values
 """
 
 import configparser
