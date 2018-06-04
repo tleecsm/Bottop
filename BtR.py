@@ -62,6 +62,7 @@ async def on_message(message):
     #Kill is checked by default (cannot be disabled)
     if message.content.startswith(commandCharacter+'kill'):
         await client.send_message(message.channel, 'Goodbye Forever...')
+        await client.logout()
         exit(0)
     
     #Parse through the list of all enabled commands

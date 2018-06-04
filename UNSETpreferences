@@ -1,4 +1,4 @@
 [configBtR]
 botToken = PASTEYOURBOTTOKENHERE
 commandCharacter = !
-enabledCommands = hello,howdy,bee,avatar,purge,karma,imgur
+enabledCommands = hello,howdy,bee,avatar,purge,karma,imgur,connect
