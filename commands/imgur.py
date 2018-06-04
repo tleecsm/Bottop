@@ -9,11 +9,11 @@ imgur.py
 Script that contains the logic to handle the "imgur" command
 
 TODO:
-    Randomize search results
     Download images and upload them directly to discord
 """
 
 from imgurpython import ImgurClient
+import random
 
 #Create the logic for imgur.py in a class
 #This ensures initialization only happens once
@@ -42,8 +42,16 @@ class imgurCommand:
         #Start by stripping the imgur command off the message
         #messageContent will contain the search request from the user
         messageContent = message.content[7:]
-        gallery = self.imgurClient.gallery_search(messageContent)
-        await discordClient.send_message(message.channel, gallery[0].link)
+        gallery = self.imgurClient.gallery_search(messageContent,
+                                                  sort='best',page=0)
+        if len(gallery) < 1:
+            #There are no images in the gallery 
+            #Return an error message
+            imgurError = 'I couldn\'t find anything with that tag!'
+            await discordClient.send_message(message.channel, imgurError)
+            return
+        image = random.choice(gallery)
+        await discordClient.send_message(message.channel, image.link)
         
     async def imgurRandom(self, discordClient, message):
         """
