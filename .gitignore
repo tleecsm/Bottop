@@ -8,6 +8,10 @@
 
 #BtR Specific
 preferences
+<<<<<<< HEAD
+=======
+get-pip.py
+>>>>>>> parent of a291ad6... Untracked pip.
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -112,4 +116,8 @@ venv.bak/
 /site
 
 # mypy
+<<<<<<< HEAD
 .mypy_cache/
+=======
+.mypy_cache/
+>>>>>>> parent of a291ad6... Untracked pip.

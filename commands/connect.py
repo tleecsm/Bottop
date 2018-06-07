@@ -16,3 +16,8 @@ async def connect(client, message):
     """
     channel = message.author.voice.voice_channel
     voice = await client.join_voice_channel(channel)
+<<<<<<< HEAD
+=======
+    player = voice.create_ffmpeg_player('commands/cool.mp3')
+    player.start()
+>>>>>>> parent of a291ad6... Untracked pip.
