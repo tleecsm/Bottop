@@ -9,6 +9,10 @@
 #BtR Specific
 preferences
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+get-pip.py
+>>>>>>> parent of a291ad6... Untracked pip.
 =======
 get-pip.py
 >>>>>>> parent of a291ad6... Untracked pip.
@@ -117,7 +121,11 @@ venv.bak/
 
 # mypy
 <<<<<<< HEAD
+<<<<<<< HEAD
 .mypy_cache/
+=======
+.mypy_cache/
+>>>>>>> parent of a291ad6... Untracked pip.
 =======
 .mypy_cache/
 >>>>>>> parent of a291ad6... Untracked pip.
