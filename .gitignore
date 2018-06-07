@@ -8,7 +8,6 @@
 
 #BtR Specific
 preferences
-get-pip.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
