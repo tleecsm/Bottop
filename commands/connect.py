@@ -16,3 +16,5 @@ async def connect(client, message):
     """
     channel = message.author.voice.voice_channel
     voice = await client.join_voice_channel(channel)
+    player = voice.create_ffmpeg_player('commands/cool.mp3')
+    player.start()
