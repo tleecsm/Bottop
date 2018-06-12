@@ -12,6 +12,7 @@ Handles the recieving discord event signals
 """
 
 import discord
+import os
 from initializeBtR import initializeData
 from commands.handleCommand import handleCommand
 from commands.karma import initializeKarma, karmaUpdate
@@ -63,6 +64,7 @@ async def on_message(message):
     if message.content.startswith(commandCharacter+'kill'):
         await client.send_message(message.channel, 'Goodbye Forever...')
         await client.logout()
+        os.system('stty sane')
         exit(0)
     
     #Parse through the list of all enabled commands

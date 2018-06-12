@@ -18,6 +18,7 @@ from commands.purge import purge, purgelast
 from commands.karma import karma, karmaself
 from commands.imgur import imgurCommand
 from commands.connect import connect
+from commands.play import play
 
 async def handleCommand(client, message):
     """
@@ -57,3 +58,5 @@ async def handleCommand(client, message):
         await imgurHandle.imgurRandom(client, message)
     elif commandName.startswith('connect'):
         await connect(client,message)
+    elif commandName.startswith('play'):
+        await play(client,message)
