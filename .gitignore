@@ -8,14 +8,8 @@
 
 #BtR Specific
 preferences
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 get-pip.py
->>>>>>> parent of a291ad6... Untracked pip.
-=======
-get-pip.py
->>>>>>> parent of a291ad6... Untracked pip.
+*.mp3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
