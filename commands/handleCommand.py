@@ -19,6 +19,7 @@ from commands.karma import karma, karmaself
 from commands.imgur import imgurCommand
 from commands.connect import connect
 from commands.play import play
+from commands.youtube import youtube
 
 async def handleCommand(client, message):
     """
@@ -60,3 +61,5 @@ async def handleCommand(client, message):
         await connect(client,message)
     elif commandName.startswith('play'):
         await play(client,message)
+    elif commandName.startswith('youtube'):
+        await youtube(client,message)

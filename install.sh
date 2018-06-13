@@ -9,6 +9,7 @@ sudo apt-get update && sudo apt-get install libsodium-dev;
 sudo apt-get install build-essential
 sudo apt-get install opus-tools
 sudo apt-get install libav-tools
+pip install youtube_dl
 sudo python3.5 get-pip.py
 python3 -m pip install -U discord.py[voice]
 pip install imgurpython
