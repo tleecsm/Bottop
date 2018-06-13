@@ -1,7 +1,7 @@
 # BtR (Bottop Reloaded)
 ## The Most Personality You'll Ever Find in a Discord Bot
 ## Created by Tanner Lee
-## Current Version: 0.4
+## Current Version: 0.5
 
 ### Bottop
 Bottop is a pet project I've had for several years.   
@@ -35,6 +35,8 @@ Listed below are some basic functionalities currently included within BtR
 * Ability to modify messages and message history in a channel
 * Ability to modify its profile via user commands
 * Stores karma data on each user (based on message reactions)
+* Ability to connect to voice channels
+* Ability to play songs from a local audio repository
 * Commands: 
   * hello
   * bee  
@@ -42,6 +44,8 @@ Listed below are some basic functionalities currently included within BtR
   * purge
     * purgelast
   * karma
+  * connect
+  * play
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
