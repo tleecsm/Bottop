@@ -30,6 +30,9 @@ initData.initialize()
 initKarma = initializeKarma()
 initKarma.initialize()
 
+#Create a list to store voice players in
+voicePlayerList = []
+
 #Create an instance of command data
 #Then call initialize() to generatedata based on the current commands 
 
@@ -74,7 +77,7 @@ async def on_message(message):
         #If the message matches one of our commands, we will handle it
         #Requires whitespace after command name
         if messageContent.startswith(commandCharacter+command):
-            await handleCommand(client, message)
+            await handleCommand(client, message, voicePlayerList)
 
 
 @client.event

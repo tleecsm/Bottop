@@ -11,7 +11,7 @@ Script that contains the logic to handle the "play" command
 
 import os.path
 
-async def play(client, message):
+async def play(client, message, voicePlayerList):
     """
     play
     Allows a user to specify the name of a song in the audio folder
@@ -43,8 +43,13 @@ async def play(client, message):
         if os.path.isfile(playFilePath):
             #Create the player
             mp3Player = voice.create_ffmpeg_player(playFilePath,
-                                        options='-loglevel panic -hide_banner')
-            mp3Player.start()
+                                        options='-loglevel panic -hide_banner',
+										after= lambda: songFinished(voicePlayerList))
+			if len(voicePlayerList) > 0:
+				#Append the player to the queue
+				voicePlayerList.append(mp3Player)
+			else:
+				mp3Player.start()
         else: 
             #No file was found, notify the user
             playError = 'I can\'t find a song with the name \''
@@ -57,3 +62,13 @@ async def play(client, message):
         playError += 'Use the \'connect\' command to summon me!'
         await client.send_message(message.channel, playError)
         return
+
+
+async def songFinished(voicePlayerList):
+	"""
+	songFinished
+	A youtube song has just finished
+	Pop the queue and start the next song
+	"""
+	voicePlayerList.pop(0)
+	voicePlayerList[0].start()
