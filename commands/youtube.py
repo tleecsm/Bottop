@@ -9,6 +9,8 @@ youtube.py
 Script that contains the logic to handle the "youtube" command
 """
 
+import asyncio
+
 async def youtube(client, message, voicePlayerList):
     """
     play
@@ -35,25 +37,40 @@ async def youtube(client, message, voicePlayerList):
             await client.send_message(message.channel, playError)
             return
         playFileUrl = messageContentList[1]   # Index 1 contains the song
-        youtubePlayer = await voice.create_ytdl_player(playFileUrl, 
-                                                       ytdl_options='-i --no-playlist'
-													   after= lambda: songFinished(voicePlayerList))
-		if len(voicePlayerList) > 0:
-			#Theres something in the queue
-			voicePlayerList.append(youtubePlayer)
-		else:
-			youtubePlayer.start()
+        if len(voicePlayerList) > 0:
+            #Theres someting in the queue
+            voicePlayerList.append(playFileUrl)
+        else:
+            voicePlayerList.append(playFileUrl)
+            youtubePlayer = await voice.create_ytdl_player(playFileUrl,
+                     ytdl_options='-i --no-playlist',
+                     after=lambda: songFinished(client, voice, voicePlayerList))
+            youtubePlayer.start()
+    
     else:
         playError = 'I have to be connected to a voice channel to do that!\n'
         playError += 'Use the \'connect\' command to summon me!'
         await client.send_message(message.channel, playError)
         return
 
-async def songFinished(voicePlayerList):
-	"""
-	songFinished
-	A youtube song has just finished
-	Pop the queue and start the next song
-	"""
-	voicePlayerList.pop(0)
-	voicePlayerList[0].start()
+def songFinished(client, voice, voicePlayerList):
+    """
+    songFinished
+    A youtube song has just finished
+    Pop the queue and start the next song
+    """
+    print("tet")
+    if len(voicePlayerList) > 0:
+        #Pop the current play and begin the next
+        voicePlayerList.pop(0)
+        playFileUrl = voicePlayerList[0]
+        coroutine = voice.create_ytdl_player(playFileUrl,
+                     ytdl_options='-i --no-playlist',
+                     after=lambda: songFinished(client, voice, voicePlayerList))
+        future = asyncio.run_coroutine_threadsafe(coroutine, client.loop)
+        try:
+            future.result().start()
+        except:
+            print("Error starting next song")
+    else: 
+        return

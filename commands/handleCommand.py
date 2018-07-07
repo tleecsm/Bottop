@@ -62,4 +62,4 @@ async def handleCommand(client, message, voicePlayerList):
     elif commandName.startswith('play'):
         await play(client,message,voicePlayerList)
     elif commandName.startswith('youtube '):
-        await play(client,message,voicePlayerList)
+        await youtube(client,message,voicePlayerList)

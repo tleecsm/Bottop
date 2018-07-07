@@ -43,13 +43,12 @@ async def play(client, message, voicePlayerList):
         if os.path.isfile(playFilePath):
             #Create the player
             mp3Player = voice.create_ffmpeg_player(playFilePath,
-                                        options='-loglevel panic -hide_banner',
-										after= lambda: songFinished(voicePlayerList))
-			if len(voicePlayerList) > 0:
-				#Append the player to the queue
-				voicePlayerList.append(mp3Player)
-			else:
-				mp3Player.start()
+                    options='-loglevel panic -hide_banner',								              after=lambda: songFinished(voicePlayerList))
+            if len(voicePlayerList) > 0:
+    		#Append the player to the queue
+                voicePlayerList.append(mp3Player)
+            else:
+                mp3Player.start()
         else: 
             #No file was found, notify the user
             playError = 'I can\'t find a song with the name \''
