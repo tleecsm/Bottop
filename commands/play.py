@@ -10,6 +10,7 @@ Script that contains the logic to handle the "play" command
 """
 
 import os.path
+import asyncio
 
 async def play(client, message, voicePlayerList):
     """
@@ -41,11 +42,16 @@ async def play(client, message, voicePlayerList):
         playFilePath += '.mp3'
         #Check if the file exists
         if os.path.isfile(playFilePath):
-            if len(voicePlayerList) > 0:
-    		#There is something in the queue
-                voicePlayerList.append(playFilePath)
-            else:
-                voicePlayerList.append(playFilePath)
+            #Create a list to be appended to the queue
+            #List will contain ['local', local_mp3_id]
+            #Will be used by songFinished to identify the type of player needed
+            playerListAppend = []
+            playerListAppend.append('local')
+            playerListAppend.append(playFilePath)
+            voicePlayerList.append(playerListAppend)
+            if len(voicePlayerList) == 1:
+                #There is nothing currently playing
+                #Start a new player
                 mp3Player = voice.create_ffmpeg_player(playFilePath,
                         options='-loglevel panic -hide_banner',								              after=lambda: songFinished(client, voice, voicePlayerList))
                 mp3Player.start()
@@ -73,11 +79,25 @@ def songFinished(client, voice, voicePlayerList):
     if len(voicePlayerList) > 0:
         #Pop the current player and begin the next
         voicePlayerList.pop(0)
-        playFilePath = voicePlayerList[0]
-        coroutine = voice.create_ffmpeg_player(playFilePath,
-                options='-loglevel panic -hide_banner',
-                after=lambda: songFinished(client, voice, voicePlayerList))
-        coroutine.start()
+        nextSong = voicePlayerList[0]
+        #Check if it is a local song or youtube
+        if nextSong[0] == 'local':
+            #Start an ffmpeg player
+            playFilePath = voicePlayerList[0]
+            coroutine = voice.create_ffmpeg_player(nextSong[1],
+                    options='-loglevel panic -hide_banner',
+                    after=lambda: songFinished(client, voice, voicePlayerList))
+            coroutine.start()
+        else:
+            #Start a youtube player
+            coroutine = voice.create_ytdl_player(nextSong[1],
+                    ytdl_options='-i --no-playlist',
+                    after=lambda: songFinished(client, voice, voicePlayerList))
+            future = asyncio.run_coroutine_threadsafe(coroutine, client.loop)
+            try:
+                future.result().start()
+            except:
+                print('Error starting next song')
     else:
         return
         
