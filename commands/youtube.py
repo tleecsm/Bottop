@@ -59,7 +59,6 @@ def songFinished(client, voice, voicePlayerList):
     A youtube song has just finished
     Pop the queue and start the next song
     """
-    print("tet")
     if len(voicePlayerList) > 0:
         #Pop the current play and begin the next
         voicePlayerList.pop(0)

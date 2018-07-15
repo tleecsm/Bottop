@@ -41,14 +41,15 @@ async def play(client, message, voicePlayerList):
         playFilePath += '.mp3'
         #Check if the file exists
         if os.path.isfile(playFilePath):
-            #Create the player
-            mp3Player = voice.create_ffmpeg_player(playFilePath,
-                    options='-loglevel panic -hide_banner',								              after=lambda: songFinished(voicePlayerList))
             if len(voicePlayerList) > 0:
-    		#Append the player to the queue
-                voicePlayerList.append(mp3Player)
+    		#There is something in the queue
+                voicePlayerList.append(playFilePath)
             else:
+                voicePlayerList.append(playFilePath)
+                mp3Player = voice.create_ffmpeg_player(playFilePath,
+                        options='-loglevel panic -hide_banner',								              after=lambda: songFinished(client, voice, voicePlayerList))
                 mp3Player.start()
+
         else: 
             #No file was found, notify the user
             playError = 'I can\'t find a song with the name \''
@@ -63,11 +64,20 @@ async def play(client, message, voicePlayerList):
         return
 
 
-async def songFinished(voicePlayerList):
-	"""
-	songFinished
-	A youtube song has just finished
-	Pop the queue and start the next song
-	"""
-	voicePlayerList.pop(0)
-	voicePlayerList[0].start()
+def songFinished(client, voice, voicePlayerList):
+    """
+    songFinished
+    A local song has just finished
+    Pop the queue and start the next song
+    """
+    if len(voicePlayerList) > 0:
+        #Pop the current player and begin the next
+        voicePlayerList.pop(0)
+        playFilePath = voicePlayerList[0]
+        coroutine = voice.create_ffmpeg_player(playFilePath,
+                options='-loglevel panic -hide_banner',
+                after=lambda: songFinished(client, voice, voicePlayerList))
+        coroutine.start()
+    else:
+        return
+        
