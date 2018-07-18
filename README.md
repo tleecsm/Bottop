@@ -37,6 +37,9 @@ Listed below are some basic functionalities currently included within BtR
 * Stores karma data on each user (based on message reactions)
 * Ability to connect to voice channels
 * Ability to play songs from a local audio repository
+* Ability to fetch songs from youtube
+* Ability to stop currently playing song and clear queue
+* Ability to stop currently playing song and play next song
 * Commands: 
   * hello
   * bee  
@@ -46,6 +49,9 @@ Listed below are some basic functionalities currently included within BtR
   * karma
   * connect
   * play
+  * youtube
+  * stop
+  * skip
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
