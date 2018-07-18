@@ -1,7 +1,7 @@
 # BtR (Bottop Reloaded)
 ## The Most Personality You'll Ever Find in a Discord Bot
 ## Created by Tanner Lee
-## Current Version: 0.5
+## Current Version: 0.6
 
 ### Bottop
 Bottop is a pet project I've had for several years.   

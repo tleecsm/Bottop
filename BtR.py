@@ -19,7 +19,7 @@ from commands.karma import initializeKarma, karmaUpdate
 
 #Display launching message and initialize version number
 print('!Launching BtR!')
-versionBtR = '0.5'
+versionBtR = '0.6'
 
 #Create an instance of initialization data 
 #Then call initialize() to generate data based on the preferences file
