@@ -20,6 +20,7 @@ from commands.imgur import imgurCommand
 from commands.connect import connect
 from commands.play import play
 from commands.youtube import youtube
+from commands.stop import stop, skip
 
 async def handleCommand(client, message, voicePlayerList):
     """
@@ -59,6 +60,10 @@ async def handleCommand(client, message, voicePlayerList):
         await imgurHandle.imgurRandom(client, message)
     elif commandName.startswith('connect'):
         await connect(client,message)
+    elif commandName.startswith('stop'):
+        await stop(client,message,voicePlayerList)
+    elif commandName.startswith('skip'):
+        await skip(client,message,voicePlayerList)
     elif commandName.startswith('play'):
         await play(client,message,voicePlayerList)
     elif commandName.startswith('youtube '):
