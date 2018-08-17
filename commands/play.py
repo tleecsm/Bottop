@@ -51,13 +51,25 @@ async def play(client, message, voicePlayerList):
             voicePlayerList.append(playerListAppend)
             if len(voicePlayerList) == 1:
                 #There is nothing currently playing
+                #Display a currently playing message first
+                nowPlaying = 'Now Playing:```prolog\n'
+                nowPlaying += playFilePath
+                nowPlaying += '\n```'
+                await client.send_message(message.channel, nowPlaying)
                 #Start a new player
                 mp3Player = voice.create_ffmpeg_player(playFilePath,
-                        options='-loglevel panic -hide_banner',								              after=lambda: songFinished(client, voice, voicePlayerList))
+                        options='-loglevel panic -hide_banner',								              after=lambda: songFinished(client, message, voice, voicePlayerList))
                 #Before starting it, replace the 0 index of the queue
                 #With the player so it can be stopped if needed
                 voicePlayerList[0] = mp3Player
                 mp3Player.start()
+            else:
+                #This has been added the queue
+                #Send a notification
+                notification = 'I\'ve added '
+                notification += playFilePath
+                notification += ' to the queue!'
+                await client.send_message(message.channel, notification)
 
         else: 
             #No file was found, notify the user
@@ -73,10 +85,10 @@ async def play(client, message, voicePlayerList):
         return
 
 
-def songFinished(client, voice, voicePlayerList):
+def songFinished(client, message, voice, voicePlayerList):
     """
     songFinished
-    A local song has just finished
+    A youtube song has just finished
     Pop the queue and start the next song
     """
     if len(voicePlayerList) > 0:
@@ -85,11 +97,23 @@ def songFinished(client, voice, voicePlayerList):
         nextSong = voicePlayerList[0]
         #Check if it is a local song or youtube
         if nextSong[0] == 'local':
-            #Start an ffmpeg player
-            playFilePath = voicePlayerList[0]
+            #Before starting the player
+            #Send a currently playing message to chat
+            playFilePath = nextSong[1]
+            nowPlaying = 'Now Playing:```prolog\n'
+            nowPlaying += playFilePath
+            nowPlaying += '\n```'
+            mroutine = client.send_message(message.channel, nowPlaying)
+            mfuture = asyncio.run_coroutine_threadsafe(mroutine, client.loop)
+            try:
+                mfuture.result()
+            except:
+                print('Error printing Currently Playing message.')
+
+            #Start the FFMPEG player
             coroutine = voice.create_ffmpeg_player(nextSong[1],
                     options='-loglevel panic -hide_banner',
-                    after=lambda: songFinished(client, voice, voicePlayerList))
+                    after=lambda: songFinished(client, message, voice, voicePlayerList))
             #Replace the 0 index with the current player so it can be stopped
             voicePlayerList[0] = coroutine
             coroutine.start()
@@ -97,7 +121,7 @@ def songFinished(client, voice, voicePlayerList):
             #Start a youtube player
             coroutine = voice.create_ytdl_player(nextSong[1],
                     ytdl_options='-i --no-playlist',
-                    after=lambda: songFinished(client, voice, voicePlayerList))
+                    after=lambda: songFinished(client, message, voice, voicePlayerList))
             future = asyncio.run_coroutine_threadsafe(coroutine, client.loop)
             try:
                 #Replace the 0 index with the current player so it can be stopped
@@ -105,6 +129,9 @@ def songFinished(client, voice, voicePlayerList):
                 future.result().start()
             except:
                 print('Error starting next song')
-    else:
-        return
+
+            #Print name of the current song to chat
+            nowPlaying = 'Now Playing:```prolog\n'
+            nowPlaying += future.result().title
+            nowPlaying += ' ('
         

@@ -54,6 +54,13 @@ async def youtube(client, message, voicePlayerList):
             nowPlaying += ' seconds)\n```'
             await client.send_message(message.channel, nowPlaying)
             youtubePlayer.start()
+        else:
+            #This has been pushed to the queue
+            #Send a confirmation message
+            confirmation = 'I\'ve added '
+            confirmation += playFileUrl
+            confirmation += ' to the queue!'
+            await client.send_message(message.channel, confirmation)
     
     else:
         playError = 'I have to be connected to a voice channel to do that!\n'
