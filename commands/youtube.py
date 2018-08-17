@@ -45,6 +45,7 @@ async def youtube(client, message, voicePlayerList):
             youtubePlayer = await voice.create_ytdl_player(playFileUrl,
                      ytdl_options='-i --no-playlist',
                      after=lambda: songFinished(client, voice, voicePlayerList))
+            voicePlayerList[0] = youtubePlayer
             youtubePlayer.start()
     
     else:
@@ -70,6 +71,8 @@ def songFinished(client, voice, voicePlayerList):
             coroutine = voice.create_ffmpeg_player(nextSong[1],
                     options='-loglevel panic -hide_banner',
                     after=lambda: songFinished(client, voice, voicePlayerList))
+            #Replace the 0 index with the current player so it can be stopped
+            voicePlayerList[0] = coroutine
             coroutine.start()
         else:
             #Start a youtube player
@@ -78,6 +81,8 @@ def songFinished(client, voice, voicePlayerList):
                     after=lambda: songFinished(client, voice, voicePlayerList))
             future = asyncio.run_coroutine_threadsafe(coroutine, client.loop)
             try:
+                #Replace the 0 index with the current player so it can be stopped
+                voicePlayerList[0] = future.result()
                 future.result().start()
             except:
                 print('Error starting next song')
