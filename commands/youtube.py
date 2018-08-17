@@ -44,8 +44,15 @@ async def youtube(client, message, voicePlayerList):
         if len(voicePlayerList) == 1:
             youtubePlayer = await voice.create_ytdl_player(playFileUrl,
                      ytdl_options='-i --no-playlist',
-                     after=lambda: songFinished(client, voice, voicePlayerList))
+                     after=lambda: songFinished(client, message, voice, voicePlayerList))
             voicePlayerList[0] = youtubePlayer
+            #Print name of the current song before starting it
+            nowPlaying = 'Now Playing:```prolog\n'
+            nowPlaying += youtubePlayer.title
+            nowPlaying += ' ('
+            nowPlaying += str(youtubePlayer.duration)
+            nowPlaying += ' seconds)\n```'
+            await client.send_message(message.channel, nowPlaying)
             youtubePlayer.start()
     
     else:
@@ -54,7 +61,7 @@ async def youtube(client, message, voicePlayerList):
         await client.send_message(message.channel, playError)
         return
 
-def songFinished(client, voice, voicePlayerList):
+def songFinished(client, message, voice, voicePlayerList):
     """
     songFinished
     A youtube song has just finished
@@ -66,11 +73,23 @@ def songFinished(client, voice, voicePlayerList):
         nextSong = voicePlayerList[0]
         #Check if it is a local song or youtube
         if nextSong[0] == 'local':
-            #Start an ffmpeg player
-            playFilePath = voicePlayerList[0]
+            #Before starting the player
+            #Send a currently playing message to chat
+            playFilePath = nextSong[1]
+            nowPlaying = 'Now Playing:```prolog\n'
+            nowPlaying += playFilePath
+            nowPlaying += '\n```'
+            mroutine = client.send_message(message.channel, nowPlaying)
+            mfuture = asyncio.run_coroutine_threadsafe(mroutine, client.loop)
+            try:
+                mfuture.result()
+            except:
+                print('Error printing Currently Playing message.')
+
+            #Start the FFMPEG player
             coroutine = voice.create_ffmpeg_player(nextSong[1],
                     options='-loglevel panic -hide_banner',
-                    after=lambda: songFinished(client, voice, voicePlayerList))
+                    after=lambda: songFinished(client, message, voice, voicePlayerList))
             #Replace the 0 index with the current player so it can be stopped
             voicePlayerList[0] = coroutine
             coroutine.start()
@@ -78,7 +97,7 @@ def songFinished(client, voice, voicePlayerList):
             #Start a youtube player
             coroutine = voice.create_ytdl_player(nextSong[1],
                     ytdl_options='-i --no-playlist',
-                    after=lambda: songFinished(client, voice, voicePlayerList))
+                    after=lambda: songFinished(client, message, voice, voicePlayerList))
             future = asyncio.run_coroutine_threadsafe(coroutine, client.loop)
             try:
                 #Replace the 0 index with the current player so it can be stopped
@@ -86,5 +105,19 @@ def songFinished(client, voice, voicePlayerList):
                 future.result().start()
             except:
                 print('Error starting next song')
+
+            #Print name of the current song to chat
+            nowPlaying = 'Now Playing:```prolog\n'
+            nowPlaying += future.result().title
+            nowPlaying += ' ('
+            nowPlaying += str(future.result().duration)
+            nowPlaying += ' seconds)\n```'
+            mroutine = client.send_message(message.channel, nowPlaying)
+            mfuture = asyncio.run_coroutine_threadsafe(mroutine, client.loop)
+            try:
+                mfuture.result()
+            except:
+                print('Error displaying Currently Playing message')
+
     else:
         return
