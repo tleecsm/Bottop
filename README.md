@@ -52,6 +52,7 @@ Listed below are some basic functionalities currently included within BtR
   * youtube
   * stop
   * skip
+  * queue
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
