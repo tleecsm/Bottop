@@ -53,13 +53,13 @@ Listed below are some basic functionalities currently included within BtR
   * stop
   * skip
   * queue
+  * imgur
   
 ### Desired Functionality
 Listed below are some of the future functionalities I'd like to implement within BtR
 * Basic chat interactions
   * User ask and reply commands
   * Chat modification commands
-* Image-fetch commands
 * MyAnimeList interactions
   * Gives opinions based on MAL ratings
 * Audio support
