@@ -10,6 +10,7 @@ Script that contains logic to print the current voice players queue to the chat 
 """
 
 import os
+import urllib
 
 async def queue(client, message, voicePlayerList):
     """
@@ -26,10 +27,12 @@ async def queue(client, message, voicePlayerList):
     else:
         #There's something in the queue
         #First entry will be currently playing
-        queue = 'Currently playing: '
-        queue += '\n\n'
-        queue += 'Current queue:\n'
+        queue = 'Current queue:```prolog\n'
+        index = 0
         for entry in voicePlayerList:
-            queue += entry[1]
-            queue += '\n'
+            if index > 0:
+                queue += entry[1]
+                queue += '\n'
+            index += 1
+        queue += '\n```'
         await client.send_message(message.channel, queue)

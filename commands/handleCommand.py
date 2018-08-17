@@ -21,6 +21,7 @@ from commands.connect import connect
 from commands.play import play
 from commands.youtube import youtube
 from commands.stop import stop, skip
+from commands.queue import queue
 
 async def handleCommand(client, message, voicePlayerList):
     """
@@ -68,3 +69,5 @@ async def handleCommand(client, message, voicePlayerList):
         await play(client,message,voicePlayerList)
     elif commandName.startswith('youtube '):
         await youtube(client,message,voicePlayerList)
+    elif commandName.startswith('queue'):
+        await queue(client,message,voicePlayerList)
